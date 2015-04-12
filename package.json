@@ -1,0 +1,29 @@
+{
+  "name": "bundle-less",
+  "version": "0.0.1",
+  "description": "Compiles LESS, autoprefixes and minifies the resulting CSS, creates a source map.",
+  "keyswords": [
+    "less",
+    "lesscss",
+    "autoprefixer",
+    "csswring",
+    "minify",
+    "css",
+    "sourcemap"
+  ],
+  "engines": {
+    "node": ">=0.8"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahelmberger/bundle-less.git"
+  },
+  "author": "Andreas Helmberger <public@ahelmberger.de>",
+  "license": "MIT",
+  "dependencies": {
+    "autoprefixer-core": "~5.1.8",
+    "csswring": "~3.0.3",
+    "less": "~2.5.0"
+  }
+}

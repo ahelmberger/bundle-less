@@ -1,8 +1,8 @@
 {
   "name": "bundle-less",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Compiles LESS, autoprefixes and minifies the resulting CSS, creates a source map.",
-  "keyswords": [
+  "keywords": [
     "less",
     "lesscss",
     "autoprefixer",

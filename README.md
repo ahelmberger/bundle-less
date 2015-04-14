@@ -70,6 +70,8 @@ Optional. If truthy, in case of an error, instead of rejecting the returned prom
 
 ## Changelog
 
+__0.0.3__ Fix package keywords
+
 __0.0.2__ Add optional error notification output
 
 __0.0.1__ Initial version

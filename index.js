@@ -3,6 +3,7 @@
 var fs           = require('fs');
 var path         = require('path');
 var less         = require('less');
+var cssesc       = require('cssesc');
 var csswring     = require('csswring');
 var autoprefixer = require('autoprefixer-core');
 
@@ -14,13 +15,17 @@ module.exports = function (content, options) {
   var lessOptions = options.less || {};
   lessOptions.filename = inputFile;
   lessOptions.sourceMap = { sourceMapFileInline: false, sourceMapBasepath: baseDir };
-  return less.render(content, lessOptions).then(function (result) {
+  var promise = less.render(content, lessOptions).then(function (result) {
     result = options.autoprefixer ? prefix(inputFile, result, options.autoprefixer) : result;
     result = options.csswring ? wring(inputFile, result, options.csswring) : result;
     result = sanitizeSourceMap(result, { inputFile: inputFile, outputCssFile: outputFile, baseDir: baseDir, sourceRoot: sourceRoot });
     result = injectSourceMappingComment(result, { outputFile: outputFile, outputMapFile: outputFile + '.map' });
     return result;
   });
+  if (options.embedErrors) {
+    promise = promise.catch(createCssErrorResult);
+  }
+  return promise;
 };
 
 function prefix(file, input, options) {
@@ -69,5 +74,33 @@ function injectSourceMappingComment(input, options) {
   return {
     css: input.css + '\n/*# sourceMappingURL=' + sourceMapUrl + ' */',
     map: input.map
+  };
+}
+
+function createCssErrorResult(error) {
+  var rules = {
+    'display': 'block',
+    'z-index': '1000',
+    'position': 'fixed',
+    'top': '0',
+    'left': '0',
+    'right': '0',
+    'font-size': '.9em',
+    'padding': '1.5em 1em 1.5em 4.5em',
+    'color': 'white',
+    'background': 'linear-gradient(#DF4F5E, #CE3741)',
+    'border': '1px solid #C64F4B',
+    'box-shadow': 'inset 0 1px 0 #EB8A93, 0 0 .3em rgba(0, 0, 0, .5)',
+    'white-space': 'pre',
+    'font-family': 'monospace',
+    'text-shadow': '0 1px #A82734',
+    'content': '"' + cssesc('' + error, { quotes: 'double' }) + '"'
+  };
+  var combinedRules = Object.keys(rules).map(function (key) {
+    return key + ':' + rules[key];
+  });
+  return {
+    css: 'html::before{' + combinedRules.join(';') + '}',
+    map: ''
   };
 }

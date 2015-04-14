@@ -1,6 +1,6 @@
 {
   "name": "bundle-less",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Compiles LESS, autoprefixes and minifies the resulting CSS, creates a source map.",
   "keyswords": [
     "less",
@@ -23,6 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "autoprefixer-core": "~5.1.8",
+    "cssesc": "~0.1.0",
     "csswring": "~3.0.3",
     "less": "~2.5.0"
   }

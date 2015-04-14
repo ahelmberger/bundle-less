@@ -64,7 +64,13 @@ Options object that will get passed to csswring. Available options can be found 
 
 Options object that will get passed to autoprefixer. Available options can be found [here](https://www.npmjs.com/package/autoprefixer-core#usage). This option is optional, if omitted, no vendor prefixes will be added.
 
+### embedErrors
+
+Optional. If truthy, in case of an error, instead of rejecting the returned promise, the output CSS will contain an error notification (source map will be empty). This is provided for development workflows to give early feedback inside the browser about style errors.
+
 ## Changelog
+
+__0.0.2__ Add optional error notification output
 
 __0.0.1__ Initial version
 
